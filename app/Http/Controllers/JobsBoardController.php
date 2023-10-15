@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JobPost;
 
 class JobsBoardController extends Controller
 {
@@ -11,7 +12,9 @@ class JobsBoardController extends Controller
      */
     public function index()
     {
-        return view("welcome");
+        $posts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])->get();
+
+        return view("home", ["posts" => $posts]);
     }
 
     /**
