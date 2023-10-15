@@ -12,7 +12,8 @@ class JobsBoardController extends Controller
      */
     public function index()
     {
-        $posts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])->get();
+        $posts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])
+            ->get()->sortByDesc("is_featured");
 
         return view("home", ["posts" => $posts]);
     }

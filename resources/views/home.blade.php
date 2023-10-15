@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1>Welcome to ITJobsBoard</h1>
+        <h1 class="header__title">Welcome to <span>ITJobsBoard</span></h1>
     </x-slot>
     <div class="posts">
         @foreach ($posts as $post)
@@ -12,46 +12,32 @@
                     class="post__logo"
                 />
             </div>
-
             <div class="post__body">
-                <p>
+                <p class="post__body__header">
                     {{$post->company_name}} @if ($post->is_featured)
                     <span>FEATURED</span>
                     @endif
                 </p>
-
-                <h2>
-                    {{$post->title}} <span>{{$post->salary}}</span>
+                <h2 class="post__body__title">
+                    {{$post->title}}
                 </h2>
-
-                <div>
+                <div class="post__body__footer">
                     <span>{{$post->country->name}}</span>
                     <span>{{$post->contract_type->name}}</span>
-                    <span>Posted by: {{$post->user->name}}</span>
+                    <span class="post__author"
+                        >Posted by: {{$post->user->name}}</span
+                    >
                 </div>
             </div>
-            <div class="post_tags">
-                <span>{{$post->level->name}}</span>
+            <div class="post__salary">
+                <span>{{$post->salary}} PLN</span>
+            </div>
+            <div class="post__tags">
+                <span class="post__tag">{{$post->level->name}}</span>
                 @foreach ($post->languages as $language)
-                <span>{{$language->name}}</span>
+                <span class="post__tag">{{$language->name}}</span>
                 @endforeach
             </div>
-            <!-- <p>Title: {{$post->title}}</p>
-            <p>Company name: {{$post->company_name}}</p>
-            <p>Is featured: {{$post->is_featured}}</p>
-            <p>
-                <img src="{{ asset('logos').'/'.$post->logo }}" />
-            </p>
-            <p>salary: {{$post->salary}}</p>
-            <p>author: {{$post->user->name}}</p>
-            <p>location: {{$post->country->name}}</p>
-            <p>level: {{$post->level->name}}</p>
-            <p>contract: {{$post->contract_type->name}}</p>
-            <ul>
-                @foreach ($post->languages as $language)
-                <li>__{{$language->name}}</li>
-                @endforeach
-            </ul> -->
         </div>
         @endforeach
     </div>
