@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\JobPost;
+use App\Models\Language;
 
 class JobsBoardController extends Controller
 {
@@ -14,6 +15,7 @@ class JobsBoardController extends Controller
     {
         $posts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])
             ->get()->sortByDesc("is_featured");
+
 
         return view("home", ["posts" => $posts]);
     }

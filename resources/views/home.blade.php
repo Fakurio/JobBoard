@@ -1,6 +1,44 @@
 <x-app-layout>
+    <script>
+        const searchBar = document.querySelector(".header__search");
+        const searchInput = document.querySelector(".header__search__input");
+
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                let chipText = searchInput.value.trim();
+                if (chipText) {
+                    let chip = document.createElement("span");
+                    let chipTextWrapper = document.createElement("span");
+                    let chipClose = document.createElement("span");
+                    let closeIcon = document.createElement("img");
+
+                    chip.classList.add("header__search__chip");
+                    chipTextWrapper.classList.add("chip__text");
+                    chipClose.classList.add("chip__close");
+
+                    closeIcon.src = "{{ asset('icons/close.svg') }}";
+                    chipClose.appendChild(closeIcon);
+                    chipTextWrapper.textContent = chipText;
+                    chip.appendChild(chipTextWrapper);
+                    chip.appendChild(chipClose);
+                    searchInput.value = "";
+                    searchBar.insertBefore(chip, searchInput);
+                    console.log(chip);
+                }
+            }
+        });
+    </script>
     <x-slot name="header">
         <h1 class="header__title">Welcome to <span>ITJobsBoard</span></h1>
+        <div class="header__search">
+            <span class="header__search__chip">
+                <span class="chip__text">Java</span>
+                <span class="chip__close">
+                    <img src="{{ asset('icons/close.svg') }}" />
+                </span>
+            </span>
+            <input class="header__search__input" type="text" />
+        </div>
     </x-slot>
     <div class="posts">
         @foreach ($posts as $post)

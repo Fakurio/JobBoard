@@ -18,6 +18,54 @@ header {
     color: rgb(98, 174, 184);
 }
 
+.header__search {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 0.5rem;
+    background-color: #1f2937;
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+.header__search__chip {
+    font-size: 1rem;
+    border: 1px solid #9c9ea1;
+    display: grid;
+    grid-template-columns: 1fr min-content;
+}
+
+.chip__text {
+    padding: 0 0.5rem;
+}
+
+.chip__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(98, 174, 184);
+    cursor: pointer;
+}
+
+.chip__close img {
+    max-width: unset;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header__search .header__search__input {
+    padding: 0;
+    /* margin-left: 1rem; */
+    border: none;
+    color: black;
+    /* background-color: transparent; */
+}
+
 main {
     display: flex;
     justify-content: center;
