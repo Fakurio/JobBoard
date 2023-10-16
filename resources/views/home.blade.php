@@ -3,10 +3,13 @@
         const searchBar = document.querySelector(".header__search");
         const searchInput = document.querySelector(".header__search__input");
 
+        const currentChips = new Set();
         searchInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 let chipText = searchInput.value.trim();
-                if (chipText) {
+                if (chipText && !currentChips.has(chipText)) {
+                    currentChips.add(chipText);
+
                     let chip = document.createElement("span");
                     let chipTextWrapper = document.createElement("span");
                     let chipClose = document.createElement("span");
@@ -18,26 +21,43 @@
 
                     closeIcon.src = "{{ asset('icons/close.svg') }}";
                     chipClose.appendChild(closeIcon);
+                    chipClose.addEventListener("click", (e) => {
+                        chip.remove();
+                    });
                     chipTextWrapper.textContent = chipText;
                     chip.appendChild(chipTextWrapper);
                     chip.appendChild(chipClose);
+
                     searchInput.value = "";
                     searchBar.insertBefore(chip, searchInput);
-                    console.log(chip);
+                } else {
+                    searchInput.value = "";
                 }
+            }
+        });
+
+        searchBar.addEventListener("click", (e) => {
+            if (e.target.classList.contains("header__search__remove")) {
+                searchBar
+                    .querySelectorAll(".header__search__chip")
+                    .forEach((chip) => {
+                        chip.remove();
+                    });
+                currentChips.clear();
+            } else {
+                searchInput.focus();
             }
         });
     </script>
     <x-slot name="header">
         <h1 class="header__title">Welcome to <span>ITJobsBoard</span></h1>
         <div class="header__search">
-            <span class="header__search__chip">
-                <span class="chip__text">Java</span>
-                <span class="chip__close">
-                    <img src="{{ asset('icons/close.svg') }}" />
-                </span>
-            </span>
             <input class="header__search__input" type="text" />
+            <img
+                class="header__search__remove"
+                src="{{ asset('icons/close.svg') }}"
+                alt="remove all tags"
+            />
         </div>
     </x-slot>
     <div class="posts">
