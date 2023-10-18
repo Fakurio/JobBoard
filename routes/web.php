@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", [JobsBoardController::class, "index"]);
+Route::post("/", [JobsBoardController::class, "filter"]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

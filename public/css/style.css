@@ -32,12 +32,17 @@ header {
     background-color: #1f2937;
     margin: 2rem auto 0;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
     padding: 1rem;
     position: relative;
+}
+
+.header__search__form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .header__search__chip {
@@ -78,6 +83,11 @@ header {
     position: absolute;
     right: 1rem;
     cursor: pointer;
+    z-index: 10;
+}
+
+[data-hidden="true"] {
+    display: none;
 }
 
 main {
@@ -200,6 +210,9 @@ main {
 }
 
 @media (max-width: 700px) {
+    header {
+        padding-inline: 4rem;
+    }
     .post {
         grid-template-columns: fit-content(100%) 1fr;
         grid-template-rows: min-content min-content;
@@ -238,11 +251,16 @@ main {
 
 @media (max-width: 400px) {
     header {
-        padding-inline: 2.5rem;
+        padding-inline: 2.3rem;
     }
 
     .header__search {
         justify-content: center;
+        padding-right: 2rem;
+    }
+
+    .header__search__remove {
+        right: 0.2rem;
     }
 
     .post {

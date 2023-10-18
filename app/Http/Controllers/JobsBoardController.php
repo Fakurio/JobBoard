@@ -20,6 +20,30 @@ class JobsBoardController extends Controller
         return view("home", ["posts" => $posts]);
     }
 
+    private function getAllLanguages()
+    {
+        $languages = Language::all()->toArray();
+        return array_map(function ($language) {
+            return strtolower($language["name"]);
+        }, $languages);
+    }
+
+    public function filter(Request $request)
+    {
+        $languages = $this->getAllLanguages();
+        $response = JobPost::whereHas('languages', function ($query) use ($request, $languages) {
+            foreach ($request->tags as $tag) {
+                if (in_array($tag, $languages)) {
+                    $query->where('name', 'like', "$tag");
+                } else {
+                    $query->where('title', 'like', "%$tag%");
+                }
+            }
+        })->get()->sortByDesc("is_featured");
+
+        return view("home", ["posts" => $response]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
