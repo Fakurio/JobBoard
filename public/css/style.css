@@ -40,9 +40,23 @@ header {
 .header__search__form {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.header__search__chips--wrapper {
+    display: flex;
+    align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.header__search__form .header__search__submit {
+    font-size: 1.1rem;
+    background-color: rgb(45, 129, 179);
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
 }
 
 .header__search__chip {
@@ -105,6 +119,12 @@ main {
 
 .post + .post {
     margin-top: 2rem;
+}
+
+.posts__error {
+    text-align: center;
+    color: red;
+    font-size: 1.2rem;
 }
 
 .post {
@@ -213,6 +233,11 @@ main {
     header {
         padding-inline: 4rem;
     }
+
+    .header__search__form {
+        width: 90%;
+    }
+
     .post {
         grid-template-columns: fit-content(100%) 1fr;
         grid-template-rows: min-content min-content;
@@ -250,17 +275,22 @@ main {
 }
 
 @media (max-width: 400px) {
-    header {
-        padding-inline: 2.3rem;
+    .header__search__form {
+        width: auto;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .header__search {
         justify-content: center;
-        padding-right: 2rem;
+    }
+
+    .header__search__submit {
+        width: 100%;
     }
 
     .header__search__remove {
-        right: 0.2rem;
+        right: 0.4rem;
     }
 
     .post {

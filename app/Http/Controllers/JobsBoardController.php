@@ -30,13 +30,22 @@ class JobsBoardController extends Controller
 
     public function filter(Request $request)
     {
+        $request->validate([
+            "tags" => "required|array",
+            "tags.*" => "required|string"
+        ]);
+
         $languages = $this->getAllLanguages();
-        $response = JobPost::whereHas('languages', function ($query) use ($request, $languages) {
+        $response = JobPost::with(["languages", "level"])->where(function ($query) use ($request, $languages) {
             foreach ($request->tags as $tag) {
                 if (in_array($tag, $languages)) {
-                    $query->where('name', 'like', "$tag");
+                    $query->whereHas("languages", function ($q) use ($tag) {
+                        $q->where('name', 'like', "$tag");
+                    });
                 } else {
-                    $query->where('title', 'like', "%$tag%");
+                    $query->whereHas("level", function ($q) use ($tag) {
+                        $q->where("name", "like", "%$tag%")->orWhere("title", "like", "%$tag%");
+                    });
                 }
             }
         })->get()->sortByDesc("is_featured");

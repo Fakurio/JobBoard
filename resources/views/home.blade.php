@@ -1,10 +1,19 @@
 @extends('layouts.app') @section('header')
-<h1 class="header__title">Welcome to <span>ITJobsBoard</span></h1>
+<h1 class="header__title">
+    Welcome to <a href="/"><span>ITJobsBoard</span></a>
+</h1>
 <div class="header__search">
     <form class="header__search__form" method="POST" action="/">
         @csrf
-        <input class="header__search__input" type="text" />
-        <input class="searchBtn" type="submit" value="search" />
+        <div class="header__search__chips--wrapper">
+            <input class="header__search__input" type="text" />
+        </div>
+        <input
+            class="header__search__submit"
+            type="submit"
+            value="search"
+            data-hidden="true"
+        />
     </form>
     <img
         class="header__search__remove"
@@ -16,7 +25,9 @@
 
 @endsection @section('content')
 <div class="posts">
-    @foreach ($posts as $post)
+    @if($posts->isEmpty())
+    <p class="posts__error">Brak postów dla podanych tagów</p>
+    @else @foreach ($posts as $post)
     <div class="post">
         <div class="post__logo--wrapper">
             <img
@@ -52,7 +63,7 @@
             @endforeach
         </div>
     </div>
-    @endforeach
+    @endforeach @endif
 </div>
 @endsection @push('scripts')
 <script defer src="{{ asset('js/searchBar.js') }}"></script>
