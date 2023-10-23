@@ -1,0 +1,129 @@
+.addPostForm {
+    background-color: #1f2937;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.addPostForm fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.addPostForm fieldset select {
+    max-width: 600px;
+    width: 100%;
+}
+
+.addPostForm input[type="text"],
+.addPostForm select {
+    background-color: #111827;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    color: #d1d3d6;
+}
+
+.addPostForm select,
+.addPostForm [type="checkbox"],
+.addPostForm label {
+    cursor: pointer;
+}
+
+.addPostForm input[type="text"]::placeholder {
+    color: inherit;
+}
+
+.addPostForm > fieldset + fieldset {
+    margin-top: 2.5rem;
+}
+
+.addPostForm h2 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.logo__wrapper {
+    background-color: #111827;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.logo__input,
+.logo__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: pointer;
+    border: 1px dashed #d1d3d6;
+}
+
+.logo__preview img {
+    width: 200px;
+}
+
+.logo__input img {
+    width: 50px;
+    height: 50px;
+}
+
+.logo__input label {
+    text-align: center;
+}
+
+.logo__input input[type="file"] {
+    display: none;
+}
+
+.logo__input label {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    pointer-events: none;
+}
+
+.addPostForm__job-section .languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #111827;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.languages h3 {
+    width: 100%;
+    text-align: center;
+}
+
+.languages label {
+    margin-left: 0.2rem;
+}
+
+.addPostForm__is-featured {
+    margin-top: 2rem;
+}
+
+.addPostForm .addPostForm__submit {
+    margin-top: 1rem;
+    background-color: rgb(45, 129, 179);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    main {
+        padding: 1rem;
+    }
+    .addPostForm {
+        padding: 2rem;
+    }
+}

@@ -16,7 +16,7 @@ header {
     margin-top: 4rem;
     font-size: 2rem;
     text-align: center;
-    padding-inline: 6rem;
+    padding-inline: 2rem;
 }
 
 .header__title span {
@@ -35,6 +35,14 @@ header {
     align-items: center;
     padding: 1rem;
     position: relative;
+    cursor: pointer;
+}
+
+.header__search__search-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    max-width: unset;
 }
 
 .header__search__form {
@@ -89,6 +97,7 @@ header {
     border: none;
     background-color: transparent;
     display: inline-block;
+    margin-left: 0.5rem;
 }
 
 .header__search__remove {
@@ -230,10 +239,6 @@ main {
 }
 
 @media (max-width: 700px) {
-    header {
-        padding-inline: 4rem;
-    }
-
     .header__search__form {
         width: 90%;
     }
@@ -274,15 +279,11 @@ main {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     .header__search__form {
         width: auto;
         flex-direction: column;
         gap: 1rem;
-    }
-
-    .header__search {
-        justify-content: center;
     }
 
     .header__search__submit {

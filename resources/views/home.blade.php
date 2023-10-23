@@ -3,7 +3,16 @@
     Welcome to <a href="/"><span>ITJobsBoard</span></a>
 </h1>
 <div class="header__search">
-    <form class="header__search__form" method="POST" action="/">
+    <img
+        class="header__search__search-icon"
+        src="{{ asset('icons/search.svg') }}"
+        alt="search"
+    />
+    <form
+        class="header__search__form"
+        method="POST"
+        action="{{ route('filter') }}"
+    >
         @csrf
         <div class="header__search__chips--wrapper">
             <input class="header__search__input" type="text" />
@@ -11,7 +20,7 @@
         <input
             class="header__search__submit"
             type="submit"
-            value="search"
+            value="Search"
             data-hidden="true"
         />
     </form>

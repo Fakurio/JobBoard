@@ -4,12 +4,14 @@ const clearIcon = document.querySelector(".header__search__remove");
 const chipsWrapper = searchBar.querySelector(".header__search__chips--wrapper");
 const submitButton = searchBar.querySelector(".header__search__submit");
 const postTagsWrappers = document.querySelectorAll(".post__tags");
+const searchIcon = searchBar.querySelector(".header__search__search-icon");
 
 const removeChip = (chip) => {
     currentChips.delete(chip.textContent);
     if (currentChips.size === 0) {
         clearIcon.setAttribute("data-hidden", true);
         submitButton.setAttribute("data-hidden", true);
+        searchIcon.removeAttribute("data-hidden");
     }
     chip.remove();
 };
@@ -21,12 +23,14 @@ const removeAllChips = () => {
     currentChips.clear();
     clearIcon.setAttribute("data-hidden", true);
     submitButton.setAttribute("data-hidden", true);
+    searchIcon.removeAttribute("data-hidden");
 };
 
 const createNewChip = (chipText) => {
     currentChips.add(chipText);
     clearIcon.removeAttribute("data-hidden");
     submitButton.removeAttribute("data-hidden");
+    searchIcon.setAttribute("data-hidden", true);
 
     let chip = document.createElement("span");
     let chipTextWrapper = document.createElement("span");
@@ -41,7 +45,7 @@ const createNewChip = (chipText) => {
     chipCloseWrapper.appendChild(closeIcon);
     chipInputHidden.type = "hidden";
     chipInputHidden.name = "tags[]";
-    chipInputHidden.value = chipText;
+    chipInputHidden.value = chipText.toLowerCase();
 
     chipCloseWrapper.addEventListener("click", () => {
         removeChip(chip);

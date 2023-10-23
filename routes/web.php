@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/", [JobsBoardController::class, "index"]);
-Route::post("/", [JobsBoardController::class, "filter"]);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get("/", [JobsBoardController::class, "index"])->name("home");
+Route::post("/", [JobsBoardController::class, "filter"])->name("filter");
+Route::middleware(["auth", "verified"])->group(function () {
+    Route::get("/addPost", [JobsBoardController::class, "create"])->name("addPost");
+    Route::get("/editPost", [JobsBoardController::class, "edit"])->name("editPost");
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

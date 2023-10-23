@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\Language;
+use App\Models\Country;
+use App\Models\ContractType;
+use App\Models\Level;
 
 class JobsBoardController extends Controller
 {
@@ -58,7 +61,17 @@ class JobsBoardController extends Controller
      */
     public function create()
     {
-        //
+        $languages = Language::all();
+        $countries = Country::all();
+        $contractTypes = ContractType::all();
+        $levels = Level::all();
+
+        return view("addPost", [
+            "languages" => $languages,
+            "countries" => $countries,
+            "contractTypes" => $contractTypes,
+            "levels" => $levels
+        ]);
     }
 
     /**
