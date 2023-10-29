@@ -140,9 +140,12 @@ class JobsBoardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $currentUserPosts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])
+            ->where("author", auth()->user()->id)
+            ->orderBy("is_featured", "desc")->get();
+        return view("editPost", ["posts" => $currentUserPosts]);
     }
 
     /**
@@ -150,15 +153,40 @@ class JobsBoardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $languages = Language::all();
+        $countries = Country::all();
+        $contractTypes = ContractType::all();
+        $levels = Level::all();
+
+        $post = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])
+            ->where("id", $id)->first();
+
+        return view("editPostForm", [
+            "post" => $post,
+            "languages" => $languages,
+            "countries" => $countries,
+            "contractTypes" => $contractTypes,
+            "levels" => $levels
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            "company_name" => "required|string",
+            "title" => "required|string",
+            "salary" => "required|numeric",
+            "logo" => "image",
+            "level" => "required|string",
+            "contract_type" => "required|string",
+            "location" => "required|string",
+            "languages" => "required|array",
+        ]);
+
+        var_dump($request->all());
     }
 
     /**

@@ -40,7 +40,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link
                         :href="route('editPost')"
-                        :active="request()->routeIs('editPost')"
+                        :active="request()->routeIs('editPost') || Route::is('editPost.post')"
                     >
                         {{ __("Edit Post") }}
                     </x-nav-link>
@@ -148,7 +148,7 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link
                 :href="route('editPost')"
-                :active="request()->routeIs('editPost')"
+                :active="request()->routeIs('editPost') || Route::is('editPost.post')"
             >
                 {{ __("Edit Post") }}
             </x-responsive-nav-link>
