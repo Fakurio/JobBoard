@@ -1,15 +1,33 @@
-@extends('layouts.app') @section('content')
-<form class="addPostForm" method="POST" action="{{ route('addPost') }}">
+@extends('layouts.app')
+
+@section("header")
+@if (session("error"))
+    <p class="session-info session-info--error">{{session("error")}}</p>
+    {{Session::forget("error")}}
+@endif
+@endsection
+
+@section('content')
+<form
+    class="addPostForm"
+    method="POST"
+    action="{{ route('addPost') }}"
+    enctype="multipart/form-data"
+>
     @csrf
     <fieldset class="addPostForm__company-section">
         <h2>Company Info</h2>
         <input
             type="text"
-            name="company"
+            name="company_name"
             class="company-name"
             placeholder="Enter company name"
             required
+            value="{{ old('company_name') }}"
         />
+        @error("logo")
+        <div class="addPostForm__error">{{ $message }}</div>
+        @enderror
         <div class="logo__wrapper">
             <div class="logo__preview hidden"></div>
             <div class="logo__input">
@@ -19,7 +37,6 @@
                     type="file"
                     name="logo"
                     accept="image/*"
-                    required
                 />
                 <label id="logo__label">Upload copmany logo</label>
             </div>
@@ -31,37 +48,46 @@
         <input
             type="text"
             name="title"
-            class="title"
             placeholder="Enter post title"
             required
+            value="{{ old('title') }}"
         />
-        <select name="level" class="level" required>
+        <input type="number" 
+            name="salary" 
+            placeholder="Enter salary" 
+            required 
+            value="{{old("salary")}}" 
+        />
+        <select name="level"  required>
             <option defaultchecked hidden value="">
                 Select experience level
             </option>
             @foreach ($levels as $level)
-            <option value="{{ $level->name }}">
+            <option @selected(old('level') == $level->name) value="{{ $level->name }}">
                 {{ $level->name }}
             </option>
             @endforeach
         </select>
-        <select name="contract_type" class="contract-type" required>
+        <select name="contract_type" required>
             <option defaultChecked hidden value="">Select contract type</option>
             @foreach ($contractTypes as $contractType)
-            <option value="{{ $contractType->name }}">
+            <option @selected(old('contract_type') == $contractType->name) value="{{ $contractType->name }}">
                 {{ $contractType->name }}
             </option>
             @endforeach
         </select>
-        <select name="location" class="location" required>
+        <select name="location" required>
             <option defaultChecked hidden value="">Select job location</option>
             @foreach ($countries as $country)
-            <option value="{{ $country->name }}">
+            <option @selected(old('location') == $country->name) value="{{ $country->name }}">
                 {{ $country->name }}
             </option>
             @endforeach
         </select>
         <div class="languages">
+            @error("languages")
+            <div class="addPostForm__error">{{ $message }}</div>
+            @enderror
             <h3>Choose languages</h3>
             @foreach ($languages as $language)
             <div>
@@ -70,6 +96,10 @@
                     id="{{ $language->name }}"
                     name="languages[]"
                     value="{{ $language->name }}"
+                    @if (is_array(old('languages')) && in_array($language->name, array_values(old('languages'))))
+                        checked
+                    @endif
+                    
                 /><label
                     for="{{ $language->name }}"
                     >{{ $language->name }}</label
@@ -80,7 +110,11 @@
     </fieldset>
 
     <div class="addPostForm__is-featured">
-        <input type="checkbox" id="is-featured" name="is_featured" />
+        <input type="checkbox" id="is-featured" name="is_featured" 
+        @if (old("is_featured") == "on")
+            checked
+        @endif
+        />
         <label for="is-featured">Mark as featured?</label>
     </div>
 

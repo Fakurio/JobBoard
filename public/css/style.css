@@ -19,6 +19,45 @@ header {
     padding-inline: 2rem;
 }
 
+.session-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem;
+    text-align: center;
+    z-index: 100;
+    font-size: 1.3rem;
+    font-weight: 700;
+    animation: slideIn 0.3s ease-in-out, slideOut 0.3s ease-in-out 2s forwards;
+}
+
+.session-info--error {
+    background-color: #d64545;
+}
+
+.session-info--success {
+    background-color: #07a570;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100%);
+    }
+}
+
 .header__title span {
     font-style: italic;
     color: rgb(98, 174, 184);

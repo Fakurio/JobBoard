@@ -2,6 +2,10 @@
 <h1 class="header__title">
     Welcome to <a href="/"><span>ITJobsBoard</span></a>
 </h1>
+@if (session("success"))
+<p class="session-info session-info--success">{{ session("success") }}</p>
+{{Session::forget('success')}}
+@endif
 <div class="header__search">
     <img
         class="header__search__search-icon"

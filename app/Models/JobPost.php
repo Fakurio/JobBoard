@@ -10,6 +10,14 @@ class JobPost extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "title",
+        "company_name",
+        "salary",
+        "logo",
+        "is_featured"
+    ];
+
     public function contract_type()
     {
         return $this->belongsTo(ContractType::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\Language;
@@ -17,8 +18,7 @@ class JobsBoardController extends Controller
     public function index()
     {
         $posts = JobPost::with(['user', 'country', 'contract_type', 'level', 'languages'])
-            ->get()->sortByDesc("is_featured");
-
+            ->orderBy("is_featured", "desc")->orderBy("title", "asc")->get();
 
         return view("home", ["posts" => $posts]);
     }
@@ -51,7 +51,7 @@ class JobsBoardController extends Controller
                     });
                 }
             }
-        })->get()->sortByDesc("is_featured");
+        })->orderBy("is_featured", "desc")->orderBy("title", "asc")->get();
 
         return view("home", ["posts" => $response]);
     }
@@ -77,9 +77,64 @@ class JobsBoardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    private function getLanguagesIDs($languages)
+    {
+        $languagesIDs = [];
+        foreach ($languages as $language) {
+            $languageID = Language::where("name", $language)->first()->id;
+            array_push($languagesIDs, $languageID);
+        }
+        return $languagesIDs;
+    }
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "company_name" => "required|string",
+            "title" => "required|string",
+            "salary" => "required|numeric",
+            "logo" => "required|image",
+            "level" => "required|string",
+            "contract_type" => "required|string",
+            "location" => "required|string",
+            "languages" => "required|array",
+        ]);
+
+        try {
+            $logo = $request->file("logo");
+            $path = public_path("/logos");
+            $newName = time() . "." . $logo->extension();
+            $logo->move($path, $newName);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Error uploading logo");
+        }
+
+        $newPost = new JobPost(
+            [
+                "company_name" => $request->company_name,
+                "title" => $request->title,
+                "salary" => $request->salary,
+                "logo" => $newName,
+                "is_featured" => $request->has("is_featured") ? true : false,
+            ]
+        );
+        $level = Level::where("name", $request->level)->first();
+        $newPost->level()->associate($level);
+
+        $contract_type = ContractType::where("name", $request->contract_type)->first();
+        $newPost->contract_type()->associate($contract_type);
+
+        $country = Country::where("name", $request->location)->first();
+        $newPost->country()->associate($country);
+
+        $newPost->user()->associate(auth()->user());
+        $newPost->save();
+
+        $newPost->languages()->attach($this->getLanguagesIDs($request->languages));
+        $newPost->save();
+
+        return redirect()->route("home")->with("success", "Job post created successfully");
     }
 
     /**

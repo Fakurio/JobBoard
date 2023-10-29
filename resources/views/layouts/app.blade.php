@@ -13,9 +13,11 @@
             href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700&display=swap"
             rel="stylesheet"
         />
+
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/addPostForm.css') }}" rel="stylesheet" />
         <!-- Scripts -->
+
         @vite(['resources/css/app.css','resources/js/app.js']) @stack("scripts")
     </head>
     <body class="font-sans antialiased">

@@ -19,6 +19,7 @@ Route::get("/", [JobsBoardController::class, "index"])->name("home");
 Route::post("/", [JobsBoardController::class, "filter"])->name("filter");
 Route::middleware(["auth", "verified"])->group(function () {
     Route::get("/addPost", [JobsBoardController::class, "create"])->name("addPost");
+    Route::post("/addPost", [JobsBoardController::class, "store"])->name("addPost");
     Route::get("/editPost", [JobsBoardController::class, "edit"])->name("editPost");
 });
 

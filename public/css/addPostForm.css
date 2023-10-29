@@ -9,6 +9,13 @@
     max-width: 600px;
 }
 
+.addPostForm__error {
+    color: #dc4438;
+    text-align: center;
+    font-weight: 700;
+    width: 100%;
+}
+
 .addPostForm fieldset {
     display: flex;
     flex-direction: column;
@@ -22,6 +29,7 @@
 }
 
 .addPostForm input[type="text"],
+.addPostForm input[type="number"],
 .addPostForm select {
     background-color: #111827;
     border: none;
@@ -36,7 +44,8 @@
     cursor: pointer;
 }
 
-.addPostForm input[type="text"]::placeholder {
+.addPostForm input[type="text"]::placeholder,
+.addPostForm input[type="number"]::placeholder {
     color: inherit;
 }
 
@@ -117,6 +126,10 @@
     border-radius: 0.5rem;
     padding: 0.5rem;
     cursor: pointer;
+}
+
+.addPostForm .addPostForm__submit:hover {
+    filter: brightness(1.1);
 }
 
 @media (max-width: 500px) {
