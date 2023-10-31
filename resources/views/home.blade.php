@@ -5,6 +5,9 @@
 @if (session("success"))
 <p class="session-info session-info--success">{{ session("success") }}</p>
 {{Session::forget('success')}}
+@endif @if (session("error"))
+<p class="session-info session-info--error">{{ session("error") }}</p>
+{{Session::forget('error')}}
 @endif
 <div class="header__search">
     <img

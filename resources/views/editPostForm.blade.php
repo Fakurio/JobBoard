@@ -1,17 +1,24 @@
 @extends('layouts.app') 
 @section('header') 
+@if (session("error"))
+    <p class="session-info session-info--error">{{session("error")}}</p>
+    {{Session::forget("error")}}
+@endif
 <h1>Enter post's new details</h1>
 @endsection
 @section('content') 
 <form
     class="postForm"
     method="POST"
-    action="{{ route('updatePost') }}"
+    action="{{ route('editPost.update', ["postID" => $post->id]) }}"
     enctype="multipart/form-data"
 >
     @csrf
     <fieldset class="postForm__company-section">
         <h2>Company Info</h2>
+        @error("company_name")
+            <div class="postForm__error">{{ $message }}</div>
+        @enderror
         <input
             type="text"
             name="company_name"
@@ -20,6 +27,9 @@
             required
             value="{{ $post->company_name }}"
         />
+        @error("logo")
+            <div class="postForm__error">{{ $message }}</div>
+        @enderror
         <div class="logo__wrapper">
             <div class="logo__preview">
                 <img src="{{asset('logos/'.$post->logo)}}" alt="logo" />
@@ -37,6 +47,9 @@
 
     <fieldset class="postForm__job-section">
         <h2>Job info</h2>
+        @error("title")
+            <div class="postForm__error">{{ $message }}</div>
+        @enderror
         <input
             type="text"
             name="title"
@@ -78,7 +91,7 @@
         </select>
         <div class="languages">
             @error("languages")
-            <div class="postForm__error">{{ $message }}</div>
+                <div class="postForm__error">{{ $message }}</div>
             @enderror
             <h3>Choose languages</h3>
             @foreach ($languages as $language)

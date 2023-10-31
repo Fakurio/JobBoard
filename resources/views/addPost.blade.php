@@ -17,6 +17,9 @@
     @csrf
     <fieldset class="postForm__company-section">
         <h2>Company Info</h2>
+        @error("company_name")
+            <div class="postForm__error">{{ $message }}</div>
+        @enderror
         <input
             type="text"
             name="company_name"
@@ -45,6 +48,9 @@
 
     <fieldset class="postForm__job-section">
         <h2>Job info</h2>
+        @error("title")
+            <div class="postForm__error">{{ $message }}</div>
+        @enderror
         <input
             type="text"
             name="title"

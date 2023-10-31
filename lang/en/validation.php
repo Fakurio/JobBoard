@@ -167,6 +167,12 @@ return [
         'languages' => [
             'required' => 'Select atleast one language.',
         ],
+        'title' => [
+            'regex' => "The title field must only contain letters and spaces.",
+        ],
+        "company_name" => [
+            "regex" => "The company name field must only contain letters and spaces."
+        ],
     ],
 
     /*

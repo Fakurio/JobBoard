@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use File;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\Language;
@@ -91,10 +92,10 @@ class JobsBoardController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "company_name" => "required|string",
-            "title" => "required|string",
+            "company_name" => "required|string|regex:/^[a-zA-Z\s]+$/",
+            "title" => "required|string|regex:/^[a-zA-Z\s]+$/",
             "salary" => "required|numeric",
-            "logo" => "required|image",
+            "logo" => "required|image|mimes:jpeg,png,jpg,svg",
             "level" => "required|string",
             "contract_type" => "required|string",
             "location" => "required|string",
@@ -110,35 +111,39 @@ class JobsBoardController extends Controller
             return redirect()->back()->with("error", "Error uploading logo");
         }
 
-        $newPost = new JobPost(
-            [
-                "company_name" => $request->company_name,
-                "title" => $request->title,
-                "salary" => $request->salary,
-                "logo" => $newName,
-                "is_featured" => $request->has("is_featured") ? true : false,
-            ]
-        );
-        $level = Level::where("name", $request->level)->first();
-        $newPost->level()->associate($level);
+        try {
+            $postToUpdate = new JobPost(
+                [
+                    "company_name" => $request->company_name,
+                    "title" => $request->title,
+                    "salary" => $request->salary,
+                    "logo" => $newName,
+                    "is_featured" => $request->has("is_featured") ? true : false,
+                ]
+            );
+            $level = Level::where("name", $request->level)->first();
+            $postToUpdate->level()->associate($level);
 
-        $contract_type = ContractType::where("name", $request->contract_type)->first();
-        $newPost->contract_type()->associate($contract_type);
+            $contract_type = ContractType::where("name", $request->contract_type)->first();
+            $postToUpdate->contract_type()->associate($contract_type);
 
-        $country = Country::where("name", $request->location)->first();
-        $newPost->country()->associate($country);
+            $country = Country::where("name", $request->location)->first();
+            $postToUpdate->country()->associate($country);
 
-        $newPost->user()->associate(auth()->user());
-        $newPost->save();
+            $postToUpdate->user()->associate(auth()->user());
+            $postToUpdate->save();
 
-        $newPost->languages()->attach($this->getLanguagesIDs($request->languages));
-        $newPost->save();
+            $postToUpdate->languages()->attach($this->getLanguagesIDs($request->languages));
+            $postToUpdate->save();
 
-        return redirect()->route("home")->with("success", "Job post created successfully");
+            return redirect()->route("home")->with("success", "Job post created successfully");
+        } catch (Exception $e) {
+            return redirect()->route("home")->with("error", "Error creating job post");
+        }
     }
 
     /**
-     * Display the specified resource.
+     * Display posts of the authenticated user.
      */
     public function show()
     {
@@ -149,7 +154,7 @@ class JobsBoardController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specific post.
      */
     public function edit(string $id)
     {
@@ -171,22 +176,62 @@ class JobsBoardController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            "company_name" => "required|string",
-            "title" => "required|string",
+            "company_name" => "required|string|regex:/^[a-zA-Z\s]+$/",
+            "title" => "required|string|regex:/^[a-zA-Z\s]+$/",
             "salary" => "required|numeric",
-            "logo" => "image",
+            "logo" => "image|mimes:jpeg,png,jpg,svg",
             "level" => "required|string",
             "contract_type" => "required|string",
             "location" => "required|string",
             "languages" => "required|array",
         ]);
 
-        var_dump($request->all());
+
+        $postToUpdate = JobPost::find($id);
+        $postToUpdate->company_name = $request->company_name;
+        $postToUpdate->title = $request->title;
+        $postToUpdate->salary = $request->salary;
+        $postToUpdate->is_featured = $request->has("is_featured") ? true : false;
+
+        try {
+            $newLogo = $request->file("logo");
+            if (!File::exists(public_path("/logos/$newLogo"))) {
+                File::delete(public_path("/logos/$postToUpdate->logo"));
+                $newName = time() . "." . $newLogo->extension();
+                $newLogo->move(public_path("/logos"), $newName);
+                $postToUpdate->logo = $newName;
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", "Error uploading logo");
+        }
+
+        try {
+            $newlevel = Level::where("name", $request->level)->first();
+            $postToUpdate->level()->dissociate();
+            $postToUpdate->level()->associate($newlevel);
+
+            $newContractType = ContractType::where("name", $request->contract_type)->first();
+            $postToUpdate->contract_type()->dissociate();
+            $postToUpdate->contract_type()->associate($newContractType);
+
+            $newCountry = Country::where("name", $request->location)->first();
+            $postToUpdate->country()->dissociate();
+            $postToUpdate->country()->associate($newCountry);
+
+            $postToUpdate->languages()->detach();
+            $postToUpdate->languages()->attach($this->getLanguagesIDs($request->languages));
+
+            $postToUpdate->save();
+
+            return redirect()->route("home")->with("success", "Job post updated successfully");
+        } catch (Exception $e) {
+            return redirect()->route("home")->with("error", "Error updating job post");
+        }
     }
 
     /**

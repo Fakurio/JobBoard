@@ -5,7 +5,7 @@
     @foreach ($posts as $post)
     <div class="post post--removable">
         <button class="post__edit-btn">
-            <a href="{{route('editPost.post', ['postID' => $post->id])}}"
+            <a href="{{route('editPost.edit', ['postID' => $post->id])}}"
                 >Edit</a
             >
         </button>

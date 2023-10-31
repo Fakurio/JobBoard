@@ -6,7 +6,8 @@ const logoInput = logoInputBox.querySelector("input");
 const previewLogo = (file) => {
     let logo = document.createElement("img");
     logo.src = URL.createObjectURL(file);
-    if (logoPreview.firstChild) logoPreview.removeChild(logoPreview.firstChild);
+    if (logoPreview.firstElementChild)
+        logoPreview.removeChild(logoPreview.firstElementChild);
     logoPreview.appendChild(logo);
 };
 
