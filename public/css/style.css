@@ -194,6 +194,7 @@ main {
     height: 70px;
     object-fit: cover;
     max-width: unset;
+    border-radius: 50%;
 }
 
 .post__body {

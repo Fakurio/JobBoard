@@ -239,6 +239,13 @@ class JobsBoardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $postToDelete = JobPost::find($id);
+            File::delete(public_path("/logos/$postToDelete->logo"));
+            $postToDelete->delete();
+            return redirect()->route("home")->with("success", "Job post deleted successfully");
+        } catch (Exception $e) {
+            return redirect()->route("home")->with("error", "Error deleting job post");
+        }
     }
 }

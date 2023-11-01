@@ -23,6 +23,7 @@ Route::middleware(["auth", "verified"])->group(function () {
     Route::get("/editPost", [JobsBoardController::class, "show"])->name("editPost.show");
     Route::get("/editPost/{postID}", [JobsBoardController::class, "edit"])->name("editPost.edit");
     Route::post("/updatePost/{postID}", [JobsBoardController::class, "update"])->name("editPost.update");
+    Route::delete("/deletePost/{postID}", [JobsBoardController::class, "destroy"])->name("deletePost");
 });
 
 Route::middleware('auth')->group(function () {

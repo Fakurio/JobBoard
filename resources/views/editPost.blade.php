@@ -1,14 +1,25 @@
 @extends('layouts.app') @section("header")
-<h1>Select post to edit</h1>
+<h1>Select post to modify</h1>
 @endsection @section('content')
 <div class="posts">
     @foreach ($posts as $post)
     <div class="post post--removable">
-        <button class="post__edit-btn">
-            <a href="{{route('editPost.edit', ['postID' => $post->id])}}"
-                >Edit</a
+        <div class="post__btn-wrapper">
+            <button class="post__btn post__btn--edit">
+                <a href="{{route('editPost.edit', ['postID' => $post->id])}}"
+                    >Edit</a
+                >
+            </button>
+            <form
+                method="POST"
+                action="{{route('deletePost', ['postID' => $post->id])}}"
             >
-        </button>
+                @csrf @method('DELETE')
+                <button type="submit" class="post__btn post__btn--delete">
+                    Delete
+                </button>
+            </form>
+        </div>
         <div class="post__logo--wrapper">
             <img
                 src="{{ asset('logos').'/'.$post->logo }}"

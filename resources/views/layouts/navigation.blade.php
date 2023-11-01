@@ -42,7 +42,7 @@
                         :href="route('editPost.show')"
                         :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
                     >
-                        {{ __("Edit Post") }}
+                        {{ __("Modify Post") }}
                     </x-nav-link>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                 :href="route('editPost.show')"
                 :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
             >
-                {{ __("Edit Post") }}
+                {{ __("Modify Post") }}
             </x-responsive-nav-link>
         </div>
         <!-- Responsive Settings Options -->
