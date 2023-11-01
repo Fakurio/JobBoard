@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\JobPost;
+use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +49,11 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $userPosts = JobPost::where('author', $user->id)->get();
+        foreach ($userPosts as $post) {
+            File::delete(public_path("/logos/$post->logo"));
+        }
 
         Auth::logout();
 

@@ -14,7 +14,7 @@
             rel="stylesheet"
         />
 
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/home.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/addPostForm.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/editPostPage.css') }}" rel="stylesheet" />
         <!-- Scripts -->
@@ -25,7 +25,7 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
-            <header>@yield('header')</header>
+            <header class="main-header">@yield('header')</header>
             <main>@yield('content')</main>
         </div>
     </body>

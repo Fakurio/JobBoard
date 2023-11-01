@@ -42,7 +42,7 @@
 @endsection @section('content')
 <div class="posts">
     @if($posts->isEmpty())
-    <p class="posts__error">Brak postów dla podanych tagów</p>
+    <p class="posts__error">0 posts that meet given requirements</p>
     @else @foreach ($posts as $post)
     <div class="post">
         <div class="post__logo--wrapper">
@@ -78,7 +78,9 @@
             <span class="post__tag">{{$language->name}}</span>
             @endforeach
         </div>
+        <button class="post__btn post__btn--apply">Apply</button>
     </div>
+
     @endforeach @endif
 </div>
 @endsection @push('scripts')

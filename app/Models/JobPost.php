@@ -42,4 +42,9 @@ class JobPost extends Model
     {
         return $this->belongsToMany(Language::class, 'job_post_languages');
     }
+
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
 }

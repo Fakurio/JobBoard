@@ -2,7 +2,9 @@
 <h1>Select post to modify</h1>
 @endsection @section('content')
 <div class="posts">
-    @foreach ($posts as $post)
+    @if($posts->isEmpty())
+    <p class="posts__error">You have 0 posts</p>
+    @endif @foreach ($posts as $post)
     <div class="post post--removable">
         <div class="post__btn-wrapper">
             <button class="post__btn post__btn--edit">

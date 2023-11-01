@@ -12,7 +12,7 @@
     --searchBar-width: calc(var(--post-width) - 200px);
 }
 
-header {
+.main-header {
     margin-top: 4rem;
     font-size: 2rem;
     text-align: center;
@@ -166,7 +166,7 @@ main {
 }
 
 .post + .post {
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .posts__error {
@@ -181,6 +181,7 @@ main {
     display: grid;
     grid-template-columns: max-content 300px 1fr 1fr;
     padding: 1rem;
+    position: relative;
 }
 
 .post__logo--wrapper {
@@ -276,6 +277,14 @@ main {
 .post__tag:hover {
     background-color: #9c9ea1;
     color: #1f2937;
+}
+
+.post__btn--apply {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #07a570;
+    transform: translateY(100%);
 }
 
 @media (max-width: 700px) {
