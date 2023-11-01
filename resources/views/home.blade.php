@@ -78,7 +78,15 @@
             <span class="post__tag">{{$language->name}}</span>
             @endforeach
         </div>
-        <button class="post__btn post__btn--apply">Apply</button>
+        <form
+            method="POST"
+            action="{{ route('applications.apply', ['postID' => $post->id]) }}"
+        >
+            @csrf
+            <button type="submit" class="post__btn post__btn--apply">
+                Apply
+            </button>
+        </form>
     </div>
 
     @endforeach @endif

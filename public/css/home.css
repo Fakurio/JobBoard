@@ -279,7 +279,7 @@ main {
     color: #1f2937;
 }
 
-.post__btn--apply {
+.post .post__btn--apply {
     position: absolute;
     bottom: 0;
     right: 0;

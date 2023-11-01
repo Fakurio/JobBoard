@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JobsBoardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\JobApplicationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,13 @@ Route::middleware(["auth", "verified"])->group(function () {
     Route::post("/addPost", [JobsBoardController::class, "store"])->name("addPost");
     Route::get("/editPost", [JobsBoardController::class, "show"])->name("editPost.show");
     Route::get("/editPost/{postID}", [JobsBoardController::class, "edit"])->name("editPost.edit");
-    Route::post("/updatePost/{postID}", [JobsBoardController::class, "update"])->name("editPost.update");
-    Route::delete("/deletePost/{postID}", [JobsBoardController::class, "destroy"])->name("deletePost");
+    Route::patch("/updatePost", [JobsBoardController::class, "update"])->name("editPost.update");
+    Route::delete("/deletePost", [JobsBoardController::class, "destroy"])->name("deletePost");
+
+    Route::get("/applications", [JobApplicationsController::class, "showApplications"])->name("applications");
+    Route::post("/applications", [JobApplicationsController::class, "store"])->name("applications.apply");
+    Route::get("/applicants", [JobApplicationsController::class, "showApplicants"])->name("applicants");
+    Route::post("/applicants/{newStatus}/{id}", [JobApplicationsController::class, "update"])->name("applicants.update");
 });
 
 Route::middleware('auth')->group(function () {

@@ -12,11 +12,9 @@
                     >Edit</a
                 >
             </button>
-            <form
-                method="POST"
-                action="{{route('deletePost', ['postID' => $post->id])}}"
-            >
+            <form method="POST" action="{{ route('deletePost') }}">
                 @csrf @method('DELETE')
+                <input type="hidden" name="postID" value="{{$post->id}}" />
                 <button type="submit" class="post__btn post__btn--delete">
                     Delete
                 </button>

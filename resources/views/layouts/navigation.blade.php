@@ -37,12 +37,58 @@
                         {{ __("Add Post") }}
                     </x-nav-link>
                 </div>
+                <div
+                    class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex cursor-pointer"
+                >
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <x-nav-link
+                                :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
+                                class="h-full"
+                            >
+                                <div
+                                    class="text-gray-400 dark:hover:text-gray-300 transition duration-150 ease-in-out"
+                                >
+                                    My posts
+                                </div>
+                                <div class="ml-1">
+                                    <svg
+                                        class="fill-gray-400 h-4 w-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
+                            </x-nav-link>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link
+                                :href="route('editPost.show')"
+                                :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
+                            >
+                                {{ __("Modify post") }}
+                            </x-dropdown-link>
+                            <x-dropdown-link
+                                :href="route('applicants')"
+                                :active="request()->routeIs('applicants')"
+                            >
+                                {{ __("Applicants") }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link
-                        :href="route('editPost.show')"
-                        :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
+                        :href="route('applications')"
+                        :active="request()->routeIs('applications')"
                     >
-                        {{ __("Modify Post") }}
+                        {{ __("My applications") }}
                     </x-nav-link>
                 </div>
             </div>
@@ -151,6 +197,22 @@
                 :active="request()->routeIs('editPost.show') || Route::is('editPost.edit')"
             >
                 {{ __("Modify Post") }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link
+                :href="route('applicants')"
+                :active="request()->routeIs('applicants')"
+            >
+                {{ __("Applicants") }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link
+                :href="route('applications')"
+                :active="request()->routeIs('applications')"
+            >
+                {{ __("My applications") }}
             </x-responsive-nav-link>
         </div>
         <!-- Responsive Settings Options -->

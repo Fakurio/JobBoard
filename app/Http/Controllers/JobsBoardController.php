@@ -178,7 +178,7 @@ class JobsBoardController extends Controller
     /**
      * Update the specified post in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $request->validate([
             "company_name" => "required|string|regex:/^[a-zA-Z\s]+$/",
@@ -192,7 +192,7 @@ class JobsBoardController extends Controller
         ]);
 
 
-        $postToUpdate = JobPost::find($id);
+        $postToUpdate = JobPost::find($request->postID);
         $postToUpdate->company_name = $request->company_name;
         $postToUpdate->title = $request->title;
         $postToUpdate->salary = $request->salary;
@@ -237,10 +237,10 @@ class JobsBoardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         try {
-            $postToDelete = JobPost::find($id);
+            $postToDelete = JobPost::find($request->postID);
             File::delete(public_path("/logos/$postToDelete->logo"));
             $postToDelete->delete();
             return redirect()->route("home")->with("success", "Job post deleted successfully");

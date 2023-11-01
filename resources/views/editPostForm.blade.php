@@ -13,7 +13,7 @@
     action="{{ route('editPost.update', ["postID" => $post->id]) }}"
     enctype="multipart/form-data"
 >
-    @csrf
+    @csrf @method('PATCH')
     <fieldset class="postForm__company-section">
         <h2>Company Info</h2>
         @error("company_name")
