@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class JobApplication extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "status",
+        "user_id",
+        "job_post_id",
+    ];
 
     public function status()
     {
