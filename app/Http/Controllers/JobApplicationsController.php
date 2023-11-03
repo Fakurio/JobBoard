@@ -11,12 +11,17 @@ class JobApplicationsController extends Controller
 {
     public function showApplications()
     {
-        print("Moje aplikacje");
+        $applications = JobApplication::with(["status", "post", "post.level", "post.contract_type", "post.country", "post.languages", "post.user"])
+            ->where("user_id", auth()->user()->id)->get();
+        // foreach ($applications as $application) {
+        //     print($application->post->company_name);
+        // }
+        return view("myApplications", ["applications" => $applications]);
     }
 
     public function showApplicants()
     {
-        print("Moje oferty");
+        print("");
     }
 
     //store current user application for job in database
@@ -29,7 +34,7 @@ class JobApplicationsController extends Controller
 
         $applicationStatus = JobApplicationsStatus::where("name", "Sent")->first()->id;
         $newApplication = JobApplication::create([
-            "status" => $applicationStatus,
+            "status_id" => $applicationStatus,
             "user_id" => request()->user()->id,
             "job_post_id" => $request->postID,
         ]);

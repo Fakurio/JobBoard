@@ -12,6 +12,6 @@ class JobApplicationsStatus extends Model
     protected $table = "job_applications_status";
     public function job_applications()
     {
-        return $this->hasMany(JobApplication::class, "status");
+        return $this->hasMany(JobApplication::class, "status_id");
     }
 }

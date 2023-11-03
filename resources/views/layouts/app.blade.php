@@ -17,6 +17,7 @@
         <link href="{{ asset('css/home.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/addPostForm.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/editPostPage.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/myApplications.css') }}" rel="stylesheet" />
         <!-- Scripts -->
 
         @vite(['resources/css/app.css','resources/js/app.js']) @stack("scripts")

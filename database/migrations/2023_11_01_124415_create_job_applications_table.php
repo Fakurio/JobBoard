@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("status")
+            $table->foreignId("status_id")
                 ->constrained("job_applications_status")
                 ->onDelete("cascade");
             $table->foreignId("job_post_id")->constrained("job_posts")
