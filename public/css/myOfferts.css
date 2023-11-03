@@ -1,0 +1,87 @@
+.accordion__tab--offert {
+    padding: 0.5rem;
+}
+
+.accordion__tab--offert > * {
+    font-size: 1rem;
+}
+
+.accordion__tab--offert .accordion__tab__body {
+    margin-top: 2rem;
+}
+
+.accordion__tab__body--narrow {
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+}
+
+.accordion__tab__body__title {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.accordion__tab__body__title + .applicant {
+    margin-top: 1rem;
+}
+
+.applicant {
+    display: grid;
+    grid-template-columns: 1fr 1fr min-content min-content;
+    gap: 1rem;
+    background-color: #30363f;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.applicant + .applicant {
+    margin-top: 1rem;
+}
+
+.applicant > * {
+    display: flex;
+    align-items: center;
+}
+
+.applicant__email {
+    margin-left: 2rem;
+}
+
+.applicant__btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.applicant__btn--accept {
+    background-color: #07a570;
+}
+
+.applicant__btn--reject {
+    background-color: #d64545;
+}
+
+@media (max-width: 600px) {
+    .applicant {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .applicant__email {
+        margin-left: 0;
+    }
+
+    .applicant > * {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .applicant {
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
+    }
+}

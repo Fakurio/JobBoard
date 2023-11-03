@@ -78,7 +78,7 @@
                                 :href="route('applicants')"
                                 :active="request()->routeIs('applicants')"
                             >
-                                {{ __("Applicants") }}
+                                {{ __("My offerts") }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
@@ -204,7 +204,7 @@
                 :href="route('applicants')"
                 :active="request()->routeIs('applicants')"
             >
-                {{ __("Applicants") }}
+                {{ __("My offerts") }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">

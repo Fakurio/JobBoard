@@ -13,15 +13,20 @@ class JobApplicationsController extends Controller
     {
         $applications = JobApplication::with(["status", "post", "post.level", "post.contract_type", "post.country", "post.languages", "post.user"])
             ->where("user_id", auth()->user()->id)->get();
-        // foreach ($applications as $application) {
-        //     print($application->post->company_name);
-        // }
+
         return view("myApplications", ["applications" => $applications]);
     }
 
     public function showApplicants()
     {
-        print("");
+        $posts = JobPost::with(["user", "level", "contract_type", "languages", "country", "applications", "applications.user"])
+            ->where("author", auth()->user()->id)
+            ->whereHas("applications", function ($q) {
+                $q->where("job_post_id", "!=", null);
+            })
+            ->get();
+
+        return view("myOfferts", ["posts" => $posts]);
     }
 
     //store current user application for job in database
