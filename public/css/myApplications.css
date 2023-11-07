@@ -50,7 +50,7 @@
 }
 
 .accordion__tab[open] .accordion__tab__title ~ * {
-    animation: open 0.7s ease-out;
+    animation: open 1s;
 }
 
 .accordion__tab.closing .accordion__tab__title ~ * {

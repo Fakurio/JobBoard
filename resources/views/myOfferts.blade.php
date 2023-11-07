@@ -1,9 +1,17 @@
 @extends('layouts.app') @section('header')
 <h1>My offerts</h1>
-@endsection @section('content')
+@endsection @section('content') @if (session("success"))
+<p class="session-info session-info--success">{{ session("success") }}</p>
+{{Session::forget('success')}}
+@endif @if (session("error"))
+<p class="session-info session-info--error">{{ session("error") }}</p>
+{{Session::forget('error')}}
+@endif
 <div class="accordion">
     @if($posts->isEmpty())
-    <p class="posts__error">You have 0 posts</p>
+    <p class="posts__error">
+        You have 0 posts or no one applied for your offers
+    </p>
     @endif @foreach ($posts as $post)
     <details class="accordion__tab accordion__tab--offert" open>
         <summary class="post accordion__tab__title">
@@ -48,14 +56,31 @@
             <div class="applicant">
                 <p>{{$application->user->name}}</p>
                 <p class="applicant__email">{{$application->user->email}}</p>
-                <button class="applicant__btn applicant__btn--accept">
-                    Accept
-                </button>
-                <button class="applicant__btn applicant__btn--reject">
-                    Reject
-                </button>
+                <form
+                    method="POST"
+                    action="{{route('applicants.update', ['newStatus' => 'accept', 'id' => $application->id])}}"
+                >
+                    @csrf
+                    <button
+                        type="submit"
+                        class="applicant__btn applicant__btn--accept"
+                    >
+                        Accept
+                    </button>
+                </form>
+                <form
+                    method="POST"
+                    action="{{route('applicants.update', ['newStatus' => 'reject', 'id' => $application->id])}}"
+                >
+                    @csrf
+                    <button
+                        type="submit"
+                        class="applicant__btn applicant__btn--reject"
+                    >
+                        Reject
+                    </button>
+                </form>
             </div>
-
             @endforeach
         </div>
     </details>

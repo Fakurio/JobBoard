@@ -19,10 +19,20 @@ class JobApplicationsController extends Controller
 
     public function showApplicants()
     {
-        $posts = JobPost::with(["user", "level", "contract_type", "languages", "country", "applications", "applications.user"])
+        $posts = JobPost::with([
+            "user",
+            "level",
+            "contract_type",
+            "languages",
+            "country",
+            "applications" => function ($query) {
+                $query->where("status_id", '=', 1);
+            },
+            "applications.user"
+        ])
             ->where("author", auth()->user()->id)
             ->whereHas("applications", function ($q) {
-                $q->where("job_post_id", "!=", null);
+                $q->where("status_id", '=', 1);
             })
             ->get();
 
@@ -50,6 +60,16 @@ class JobApplicationsController extends Controller
 
     public function update($newStatus, $id)
     {
-        print("" . $newStatus . "" . $id);
+        $application = JobApplication::where("id", $id)->first();
+        if ($newStatus == "accept") {
+            $application->status_id = JobApplicationsStatus::where("name", "Accepted")->first()->id;
+            $application->save();
+            return back()->with("success", "Application accepted");
+        } else if ($newStatus == "reject") {
+            $application->status_id = JobApplicationsStatus::where("name", "Rejected")->first()->id;
+            $application->save();
+            return back()->with("success", "Application rejected");
+        }
+        return back()->with("error", "Something went wrong");
     }
 }

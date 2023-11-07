@@ -56,11 +56,11 @@
     cursor: pointer;
 }
 
-.applicant__btn--accept {
+.applicant__btn.applicant__btn--accept {
     background-color: #07a570;
 }
 
-.applicant__btn--reject {
+.applicant__btn.applicant__btn--reject {
     background-color: #d64545;
 }
 
